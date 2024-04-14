@@ -1,11 +1,7 @@
 import { Button, Grid, Snackbar, Typography, keyframes, styled } from "@mui/material";
 import MuiAlert, { AlertColor } from "@mui/material/Alert";
 import clsx from "clsx";
-import { BaseResponse } from "interfaces/response";
-import React, { FormEvent, useCallback, useEffect, useRef, useState } from "react";
-import api from "services/api";
-import { EnvConfig } from "services/envConfig";
-import { logDev } from "utils/logs";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 
 const PREFIX = "SectionContact";
 const classes = {
@@ -164,7 +160,7 @@ const SectionContact = () => {
         throw new Error(result.message);
       }
     } catch (error: any) {
-      setToast({ show: true, message: error.message, severity: "error"});
+      setToast({ show: true, message: error.message, severity: "error" });
     } finally {
       setRunning(false);
     }

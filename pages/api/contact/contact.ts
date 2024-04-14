@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import nodemailer from "nodemailer";
 
-export default async (req, res) => {
+export default async (req: any, res: any) => {
   if (req.method === "POST") {
     const { name, email, subject, message } = req.body;
 
@@ -26,7 +26,6 @@ export default async (req, res) => {
       const result = await transporter.sendMail(mailOptions);
       res.status(200).json({ message: "Email sent successfully", result: result });
     } catch (error) {
-      console.error("Error sending email:", error);
       res.status(500).json({ message: "Failed to send email", error: error });
     }
   } else {

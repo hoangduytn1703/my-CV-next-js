@@ -5,6 +5,7 @@ import baseAxios from "services/baseAxios";
 import { logDev, logError } from "utils/logs";
 
 const errorHandle = async (url: string, error: AxiosError) => {
+  console.log("🚀 ~ errorHandle ~ url:", url);
   logError(error.message);
   const errorRes = {
     apiPath: "/api/contact",
