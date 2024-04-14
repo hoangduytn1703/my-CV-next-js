@@ -2,12 +2,12 @@
 
 ## Request
 
--   IDE: [VSCode](https://code.visualstudio.com/download)
--   NodeJs: 18.x or newer (https://nodejs.org/en/download)
--   VsCode Extensions:
-    1. Eslint
-    2. Prettier - Code formatter
--   Yarn: npm i yarn -g
+- IDE: [VSCode](https://code.visualstudio.com/download)
+- NodeJs: 18.x or newer (https://nodejs.org/en/download)
+- VsCode Extensions:
+  1. Eslint
+  2. Prettier - Code formatter
+- Yarn: npm i yarn -g
 
 ## Install
 

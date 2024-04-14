@@ -218,7 +218,7 @@ export const cvConfig = {
     },
     {
       type: [WorkType.Own, WorkType.Web],
-      title: "TĐ.VN - My blog",
+      title: "AkiraGosho1703 - My blog",
       term: "Gatsby",
       moreIcon: MoreType.Link,
       thumbnail: "/images/works/my-blog.webp",

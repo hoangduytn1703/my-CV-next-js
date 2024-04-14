@@ -261,7 +261,7 @@ const SlideMenu = () => {
               width={32}
               height={32}
               src={Logo}
-              alt="TĐ.VN"
+              alt="https://www.facebook.com/AkiraGosho1703/"
               onClick={onClickLogo}
               style={{
                 maxWidth: "100%",
@@ -284,9 +284,9 @@ const SlideMenu = () => {
           </div>
           <div className={classes.footer}>
             <span className="copyright">
-              © 2023{" "}
-              <a href="https://xn--t-lia.vn" target="_blank" rel="noreferrer">
-                TĐ.VN
+              © 2024{" "}
+              <a href="https://www.facebook.com/AkiraGosho1703/" target="_blank" rel="noreferrer">
+                DuyNH
               </a>
             </span>
           </div>
