@@ -1,0 +1,112 @@
+html,
+body {
+    overscroll-behavior-x: none;
+    -webkit-tap-highlight-color: transparent; /* for removing the highlight on Android */
+    scroll-behavior: smooth;
+}
+html {
+    font-size: 62.5%;
+}
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.6rem;
+    font-family: "Rubik", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+        "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif";
+    line-height: 1.4;
+    background-color: var(--main-bg);
+    color: var(--primary-text);
+    overflow-x: hidden;
+    transition: color 0.5s, background-color 0.5s;
+}
+.button {
+    cursor: pointer;
+    &:active {
+        opacity: 0.8;
+    }
+}
+a {
+    outline: 0;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    color: var(--main-color);
+}
+a:hover {
+    text-decoration: none;
+    color: var(--main-color);
+    filter: brightness(1.4);
+}
+b {
+    font-weight: 500;
+}
+.MuiButton-root {
+    &.btn-radius {
+        border-radius: 30px !important;
+    }
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+textarea {
+    resize: vertical;
+    min-height: 8rem;
+}
+.grecaptcha-badge {
+    opacity: 0;
+}
+section {
+    padding: 2rem 0;
+    position: relative;
+    transition: color 0.5s;
+}
+.section-title {
+    margin-left: 1.4rem !important;
+    position: relative;
+    color: var(--primary-text);
+    transition: color 0.5s;
+}
+.section-title:before {
+    content: "";
+    filter: var(--dot-bg);
+    background-image: url(../images/dots-bg.svg);
+    display: block;
+    height: 37px;
+    left: -14px;
+    top: -14px;
+    position: absolute;
+    width: 37px;
+}
+.rounded {
+    border-radius: 20px !important;
+}
+.bg-primary {
+    background-color: var(--primary-bg);
+    box-shadow: 0px 5px 20px 0px var(--shadow-border);
+    transition: background-color 0.5s;
+}
+.text-light {
+    color: var(--light-text);
+}
+.text-dark {
+    color: var(--dark-text);
+}
+.container {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2.4rem;
+    padding-right: 2.4rem;
+}
+@media (min-width: 1200px) {
+    .container {
+        max-width: 920px;
+    }
+}
+@media (min-width: 1366px) {
+    .container {
+        max-width: 1080px;
+    }
+}
