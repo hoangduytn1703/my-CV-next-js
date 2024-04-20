@@ -27,16 +27,35 @@ const Root = styled("div")<StyleProps>((props) => ({
     height: props.height,
     "& .MuiSkeleton-root": {
       margin: "0 auto",
-      zIndex: 1,
+      zIndex: 102,
     },
     "& img": {
       margin: "0 auto",
-      position: "absolute",
+      position: "relative",
       top: 0,
       left: 0,
       width: "100%",
       height: "100%",
       objectFit: "cover",
+      transition: "all .3s ease-out",
+      zIndex: 102,
+    },
+    "&:after": {
+      content: '""',
+      border: "15px solid rgba(2, 59, 47, .9)",
+      borderRadius: "50%",
+      top: "-15px",
+      left: "-15px",
+      width: "100%",
+      height: "100%",
+      position: "absolute",
+      animation: "pulsate 1.6s ease-out",
+      animationIterationCount: "infinite",
+      webkitAnimation: "pulsate 1.6s ease-out",
+      opacity: 0,
+      zIndex: 99,
+      "-webkit-animation": "pulsate 1.6s ease-out",
+      "-webkit-animation-iteration-count": "infinite",
     },
   },
   [`& .${classes.s}`]: {
@@ -45,6 +64,32 @@ const Root = styled("div")<StyleProps>((props) => ({
     background: "var(--avatar-bg)",
     "&:after": {
       background: "linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent)",
+    },
+  },
+  "@keyframes pulsate": {
+    "0%": {
+      transform: "scale(0.6, 0.6)",
+      opacity: 0,
+    },
+    "50%": {
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(1, 1)",
+      opacity: 0,
+    },
+  },
+  "@-webkit-keyframes pulsate": {
+    "0%": {
+      transform: "scale(0.6, 0.6)",
+      opacity: 0,
+    },
+    "50%": {
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(1, 1)",
+      opacity: 0,
     },
   },
 }));

@@ -20,6 +20,7 @@ const Root = styled(Grid)(() => ({
     cursor: "pointer",
     margin: 10,
     boxShadow: "0px 5px 20px 0px rgba(69, 67, 96, 0.1)",
+    height: "215px",
     borderRadius: 20,
     "& .more-button": {
       color: "var(--primary-text)",
@@ -156,7 +157,7 @@ const WorkItem = ({ title, term, moreIcon, thumbnail, href, type, description, s
             sizes="100vw"
             style={{
               width: "100%",
-              height: "auto",
+              height: "215px",
               objectFit: "cover",
               display: "flex",
             }}

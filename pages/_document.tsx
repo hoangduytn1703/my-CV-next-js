@@ -13,6 +13,12 @@ export default function MyDocument(props: DocumentHeadTagsProps) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
         <link rel="icon" href="/favicon.ico" />
         <DocumentHeadTags {...props} />
       </Head>

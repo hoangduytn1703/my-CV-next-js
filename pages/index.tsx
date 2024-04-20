@@ -13,7 +13,7 @@ const SectionHome = dynamic(() => import("components/Section/Home"));
 const SectionAbout = dynamic(() => import("components/Section/About"));
 const SectionServices = dynamic(() => import("components/Section/Services"));
 const SectionExperience = dynamic(() => import("components/Section/Experience"));
-// const SectionWorks = dynamic(() => import("components/Section/Works"));
+const SectionWorks = dynamic(() => import("components/Section/Works"));
 // const SectionBlog = dynamic(() => import("components/Section/Blog"));
 const SectionContact = dynamic(() => import("components/Section/Contact"));
 const ReturnToTop = dynamic(() => import("components/ReturnToTop"), { ssr: false });
@@ -81,8 +81,8 @@ const CV = () => {
         </FbContext.Provider>
         <SectionServices />
         <SectionExperience />
-        {/* <SectionWorks />
-                <SectionBlog /> */}
+        <SectionWorks />
+        {/*        <SectionBlog /> */}
         <SectionContact />
       </Root>
       <ReturnToTop />

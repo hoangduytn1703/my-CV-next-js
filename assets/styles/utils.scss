@@ -1,83 +1,117 @@
 @use "sass:math";
 .flex {
-    display: flex !important;
+  display: flex !important;
 }
 .flex-col {
-    flex-flow: column wrap !important;
+  flex-flow: column wrap !important;
 }
 .flex-row {
-    flex-flow: row wrap !important;
+  flex-flow: row wrap !important;
 }
 .align-items-center {
-    align-items: center !important;
+  align-items: center !important;
 }
 .justify-content-center {
-    justify-content: center !important;
+  justify-content: center !important;
 }
 .border-radius {
-    border-radius: 0.3rem !important;
+  border-radius: 0.3rem !important;
 }
 .text-nowrap {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .text-center {
-    text-align: center !important;
+  text-align: center !important;
 }
 .text-left {
-    text-align: left !important;
+  text-align: left !important;
 }
 .text-right {
-    text-align: right !important;
+  text-align: right !important;
 }
 .relative {
-    position: relative !important;
+  position: relative !important;
 }
 .cursor-pointer {
-    cursor: pointer;
-    &:active {
-        opacity: 0.7;
-    }
+  cursor: pointer;
+  &:active {
+    opacity: 0.7;
+  }
 }
 .circle {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 @for $i from 0 through 10 {
-    .ml-#{$i} {
-        margin-left: #{math.div($i, 2)}rem !important;
-    }
-    .mr-#{$i} {
-        margin-right: #{math.div($i, 2)}rem !important;
-    }
-    .mt-#{$i} {
-        margin-top: #{math.div($i, 2)}rem !important;
-    }
-    .mb-#{$i} {
-        margin-bottom: #{math.div($i, 2)}rem !important;
-    }
-    .m-#{$i} {
-        margin: #{math.div($i, 2)}rem !important;
-    }
-    .p-#{$i} {
-        padding: #{math.div($i, 2)}rem !important;
-    }
+  .ml-#{$i} {
+    margin-left: #{math.div($i, 2)}rem !important;
+  }
+  .mr-#{$i} {
+    margin-right: #{math.div($i, 2)}rem !important;
+  }
+  .mt-#{$i} {
+    margin-top: #{math.div($i, 2)}rem !important;
+  }
+  .mb-#{$i} {
+    margin-bottom: #{math.div($i, 2)}rem !important;
+  }
+  .m-#{$i} {
+    margin: #{math.div($i, 2)}rem !important;
+  }
+  .p-#{$i} {
+    padding: #{math.div($i, 2)}rem !important;
+  }
 }
 .list-inline {
-    padding-left: 0;
-    list-style: none;
+  padding-left: 0;
+  list-style: none;
 }
 .list-inline-item {
-    display: inline-block;
+  display: inline-block;
+}
+.list-inline-item-info {
+  display: inline-block;
+  transition-timing-function: ease;
+  transition-duration: 0.2s;
+  &:hover {
+    transition: all 0.2s ease-out;
+    -webkit-transform: translateY(-6px) rotate(30deg);
+    transform: translateY(-6px) rotate(30deg);
+    a:after {
+      opacity: 1;
+      -webkit-transform: translate(15.5px, 0px) rotate(-30deg);
+      transform: translate(15.5px, 0px) rotate(-30deg);
+    }
+  }
+  a {
+    position: relative;
+    &::after {
+      pointer-events: none;
+      position: absolute;
+      z-index: -1;
+      content: "";
+      top: 100%;
+      left: 5%;
+      height: 10px;
+      width: 90%;
+      opacity: 0;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0, transparent 80%);
+      transition-duration: 0.45s;
+      transition-property: opacity, -webkit-transform;
+      transition-property: transform, opacity;
+      transition-property: transform, opacity, -webkit-transform;
+    }
+  }
 }
 .clearfix::after {
-    display: block;
-    clear: both;
-    content: "";
+  display: block;
+  clear: both;
+  content: "";
 }
 .float-left {
-    float: left !important;
+  float: left !important;
 }
 .float-right {
-    float: right !important;
+  float: right !important;
 }

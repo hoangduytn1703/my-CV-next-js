@@ -30,7 +30,7 @@ const config = {
       iconClassName: "icon-social-linkedin",
     },
   ],
-  copyright: "Copyright © 2023 Nguyen Hoang Duy. Unless otherwise noted, all code MIT license.",
+  copyright: "Copyright © 2024 Nguyen Hoang Duy. Unless otherwise noted, all code MIT license.",
 };
 
 export default config;

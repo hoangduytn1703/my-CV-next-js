@@ -156,6 +156,13 @@ const SectionContact = () => {
       const result = await response.json();
       if (response.ok) {
         setToast({ show: true, message: result.message, severity: "success" });
+        // TODO: ???
+        setTimeout(() => {
+          setName("");
+          setEmail("");
+          setSubject("");
+          setMessage("");
+        }, 100); // Wait for 100 milliseconds
       } else {
         throw new Error(result.message);
       }

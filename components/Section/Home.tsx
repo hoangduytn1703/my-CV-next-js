@@ -47,13 +47,13 @@ const Root = styled("section")(() => ({
     zIndex: 1,
     width: "100%",
     "& h1": {
-      fontSize: 36,
+      fontSize: 40,
     },
   },
   [`& .${classes.socialIcons}`]: {
     "& a": {
       color: "var(--primary-text)",
-      fontSize: 23,
+      fontSize: 30,
       "&:hover": {
         color: "var(--active-text)",
       },
@@ -194,25 +194,25 @@ const SectionHome = () => {
     <Root id="home" className={`${classes.root} home flex align-items-center`}>
       <div className={classes.intro}>
         <FbContext.Consumer>
-          {(profileUrl) => <ImgSkeleton alt="avatar" src={profileUrl} className="circle" width={108} height={108} />}
+          {(profileUrl) => <ImgSkeleton alt="avatar" src={profileUrl} className="circle" width={180} height={180} />}
         </FbContext.Consumer>
         <Typography variant="h1" className="mb-2">
           {cvConfig.name}
         </Typography>
         <span>
           {"I'm a "}
-          <ReactTypingEffect text={cvConfig.mainJob} speed={100} eraseSpeed={50} typingDelay={200} eraseDelay={1500} />
+          <ReactTypingEffect text={cvConfig.mainJob} speed={50} eraseSpeed={50} typingDelay={200} eraseDelay={100} />
         </span>
         <ul className={`${classes.socialIcons} list-inline mb-0 mt-4`}>
           {config.socialLinks.map((i) => (
-            <li key={i.label} className="list-inline-item">
+            <li key={i.label} className="list-inline-item list-inline-item-info">
               <a href={i.url} target="_blank" rel="noreferrer">
                 <i className={i.iconClassName} />
               </a>
             </li>
           ))}
         </ul>
-        <Button variant="contained" color="primary" className="mt-4 btn-radius" onClick={scrollToBottom}>
+        <Button variant="contained" color="primary" className="mt-4 btn-radius hire-me-button" onClick={scrollToBottom}>
           Hire me
         </Button>
       </div>
