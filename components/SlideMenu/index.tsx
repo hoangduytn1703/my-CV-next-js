@@ -293,7 +293,7 @@ const SlideMenu = () => {
           <Tooltip title="Toggle light/dark theme" arrow>
             <DarkModeSwitch
               className={classes.themeMode}
-              checked={themeMode === ThemeMode.Dark}
+              checked={themeMode === ThemeMode.Light}
               onChange={onChangeTheme}
               sunColor="#fa6437"
               moonColor="#fadd37"
