@@ -1,7 +1,9 @@
 import { Button, Grid, Typography, styled } from "@mui/material";
 import ImgSkeleton from "components/ImgSkeleton";
 import { cvConfig } from "config/cv";
-import { FbContext } from "pages";
+// import { FbContext } from "pages";
+import avatar from "assets/images/avatar2.jpg"; // Import ảnh avatar
+
 import React from "react";
 import FactItem from "./FactItem";
 import SkillItem from "./SkillItem";
@@ -61,11 +63,12 @@ const SectionAbout = () => {
         </Typography>
         <Grid container className={classes.wrapper}>
           <Grid item xs={12} md={3} className="flex justify-content-center">
-            <FbContext.Consumer>
+            {/* <FbContext.Consumer>
               {(profileUrl) => (
                 <ImgSkeleton src={profileUrl} className="circle" alt="avatar" width={150} height={150} />
               )}
-            </FbContext.Consumer>
+            </FbContext.Consumer> */}
+            <ImgSkeleton alt="avatar" src={avatar.src} className="circle" width={150} height={150} />
           </Grid>
           <Grid container item xs={12} md={9} className={classes.content}>
             <Grid container item className="rounded bg-primary p-4 m-0">

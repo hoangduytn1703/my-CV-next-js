@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Skeleton, styled } from "@mui/material";
-import { useCallback, useState } from "react";
+import avatar from "assets/images/avatar2.jpg";
+import { useEffect, useState } from "react";
 
 /* eslint-disable @next/next/no-img-element */
 interface Props {
-  src: string;
+  src?: string;
   width: number;
   height: number;
   alt: string;
@@ -95,17 +96,23 @@ const Root = styled("div")<StyleProps>((props) => ({
 }));
 
 const ImgSkeleton = (props: Props) => {
-  const { width, height, src } = props;
+  const { width, height, alt, className, src = avatar } = props;
   const [loading, setLoading] = useState(true);
 
-  const onImgLoad = useCallback(() => {
-    setLoading(false);
+  // const onImgLoad = useCallback(() => {
+  //   setLoading(false);
+  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
+  const imageSrc = typeof src === "string" ? src : src ? src.src : undefined;
 
   return (
     <Root width={width} height={height} className={classes.root}>
-      {src && <img {...props} onLoad={onImgLoad} />}
-      {(!src || loading) && (
+      {imageSrc && <img src={imageSrc} alt={alt} className={className} />}
+      {(!imageSrc || loading) && (
         <Skeleton classes={{ root: classes.s }} variant="circular" animation="wave" width={width} height={height} />
       )}
     </Root>

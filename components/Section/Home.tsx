@@ -1,9 +1,9 @@
 import { Button, Typography, keyframes, styled } from "@mui/material";
+import avatar from "assets/images/avatar2.jpg"; // Import ảnh avatar
 import ImgSkeleton from "components/ImgSkeleton";
 import { cvConfig } from "config/cv";
 import config from "config/site";
 import dynamic from "next/dynamic";
-import { FbContext } from "pages";
 import React, { useEffect, useRef } from "react";
 
 const ReactTypingEffect = dynamic(() => import("react-typing-effect"));
@@ -193,9 +193,7 @@ const SectionHome = () => {
   return (
     <Root id="home" className={`${classes.root} home flex align-items-center`}>
       <div className={classes.intro}>
-        <FbContext.Consumer>
-          {(profileUrl) => <ImgSkeleton alt="avatar" src={profileUrl} className="circle" width={180} height={180} />}
-        </FbContext.Consumer>
+        <ImgSkeleton alt="avatar" src={avatar.src} className="circle" width={180} height={180} />
         <Typography variant="h1" className="mb-2">
           {cvConfig.name}
         </Typography>
