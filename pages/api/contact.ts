@@ -41,7 +41,7 @@ export default async (req: any, res: any) => {
       secure: false,
       auth: {
         user: "hoangduytn1703@gmail.com", // Địa chỉ email của bạn
-        pass: "mqdj gfhk aejr gtuw", // Mật khẩu
+        pass: "txiv xbhp btjt sqwx", // Mật khẩu
       },
     });
 

@@ -139,7 +139,7 @@ export const cvConfig = {
         time: "6/2019 - Present",
         title: "Front end Developer",
         company: "GMO Z.Com Runsystem HCM",
-        description: `.............`,
+        description: `Front end developer, develop web app, use VueJS/NuxtJS, ReactJS/NextJS, HTML5/CSS3, Javascript/Typescript, Jquery, Bootstrap, TailwindCSS, SCSS, ...`,
       },
       {
         time: "7/2017 - 4/ 2019",
@@ -207,6 +207,15 @@ export const cvConfig = {
       moreIcon: MoreType.Options,
       thumbnail: "/images/works/chikipay.png",
       href: "https://web.chikipay-kyousou.jp/",
+    },
+    {
+      type: [WorkType.Mobile, WorkType.Web],
+      title: "Metauranai",
+      term: "NextJS",
+      description: "",
+      moreIcon: MoreType.Options,
+      thumbnail: "/images/works/metauranai.png",
+      href: "https://metauranai.com/",
     },
     // {
     //   type: [WorkType.Mobile],
