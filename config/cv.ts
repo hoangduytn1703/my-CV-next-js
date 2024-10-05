@@ -139,7 +139,7 @@ export const cvConfig = {
         time: "6/2019 - Present",
         title: "Front end Developer",
         company: "GMO Z.Com Runsystem HCM",
-        description: `Front end developer, develop web app, use VueJS/NuxtJS, ReactJS/NextJS, HTML5/CSS3, Javascript/Typescript, Jquery, Bootstrap, TailwindCSS, SCSS, ...`,
+        description: `Front end developer, develop web app, use VueJS/NuxtJS, ReactJS/NextJS, HTML5/CSS3, Javascript/Typescript, Jquery, Bootstrap, TailwindCSS, SCSS...`,
       },
       {
         time: "7/2017 - 4/ 2019",
