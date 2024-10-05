@@ -39,8 +39,8 @@ export default async (req: any, res: any) => {
       host: "smtp.gmail.com", // SMTP host, ví dụ smtp.gmail.com
       port: 587,
       secure: false,
-      auth: {
-        user: "hoangduytn1703@gmail.com", // Địa chỉ email của bạn
+      auth: {a
+        user: "hoangduytn1703@gmail.com", // Địa chỉ email của bạnasdasdsad
         pass: "txiv xbhp btjt sqwx", // Mật khẩu
       },
     });
