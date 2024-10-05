@@ -211,7 +211,7 @@ const SectionHome = () => {
           ))}
         </ul>
         <Button variant="contained" color="primary" className="mt-4 btn-radius hire-me-button" onClick={scrollToBottom}>
-          Hire me
+          Hire me!
         </Button>
       </div>
       <div className={classes.scrollDown}>
