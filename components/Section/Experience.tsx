@@ -102,7 +102,7 @@ const SectionExperience = () => {
     <section id="experience">
       <Root className="container">
         <Typography variant="h2" className="section-title sanim">
-          Experience
+          Experiences
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
