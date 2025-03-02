@@ -13,7 +13,7 @@ const errorHandle = async (url: string, error: AxiosError) => {
     message: error.message,
   } as BaseResponse;
   if (error?.response) {
-    // TODO:
+    // TODO: handle error response
     return errorRes;
   } else {
     const config: AxiosRequestConfig = error?.config;

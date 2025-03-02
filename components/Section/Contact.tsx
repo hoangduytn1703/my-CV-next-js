@@ -157,12 +157,10 @@ const SectionContact = () => {
       if (response.ok) {
         setToast({ show: true, message: result.message, severity: "success" });
         // TODO: ???
-        setTimeout(() => {
-          setName("");
-          setEmail("");
-          setSubject("");
-          setMessage("");
-        }, 100); // Wait for 100 milliseconds
+        setName("");
+        setEmail("");
+        setSubject("");
+        setMessage("");
       } else {
         throw new Error(result.message);
       }

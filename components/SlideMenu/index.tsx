@@ -284,7 +284,7 @@ const SlideMenu = () => {
           </div>
           <div className={classes.footer}>
             <span className="copyright">
-              © 2024{" "}
+              © {new Date().getFullYear()}{" "}
               <a href="https://www.facebook.com/AkiraGosho1703/" target="_blank" rel="noreferrer">
                 DuyNH
               </a>
