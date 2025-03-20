@@ -96,7 +96,7 @@ const Root = styled(SwipeableDrawer)(({ theme }) => ({
 }));
 
 const onClickLogo = () => {
-  window.open("https://xn--t-lia.vn");
+  window.open("https://www.facebook.com/AkiraGosho1703/");
 };
 
 enum ThemeMode {
