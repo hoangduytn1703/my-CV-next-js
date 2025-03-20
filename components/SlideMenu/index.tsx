@@ -274,8 +274,13 @@ const SlideMenu = () => {
             {cvConfig.menu.map((item) => (
               <Button
                 key={item.href}
-                className={clsx("link", currentPath === item.href ? "active" : "")}
+                className={clsx(
+                  "link",
+                  currentPath === item.href ? "active" : "",
+                  item.href === "blog" ? "opacity-50" : ""
+                )}
                 onClick={onItemClick(item.href)}
+                disabled={item.href === "blog"}
               >
                 <i className={item.className} />
                 {item.label}

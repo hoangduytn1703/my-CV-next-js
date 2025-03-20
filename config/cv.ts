@@ -95,6 +95,7 @@ export const cvConfig = {
       label: "Blog",
       href: "blog",
       className: "icon-note",
+      disabled: true,
     },
     {
       label: "Contact",

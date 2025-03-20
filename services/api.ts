@@ -20,7 +20,7 @@ const errorHandle = async (url: string, error: AxiosError) => {
     if (config) {
       switch (error.code) {
         case AXIOS_TIMEOUT_CODE:
-          // TODO:
+          // TODO: handle timeout error
           return errorRes;
       }
     }
