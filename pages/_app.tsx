@@ -9,7 +9,6 @@ declare global {
     ScrollReveal: scrollReveal.ScrollRevealObject;
   }
 }
-
 function MyApp(props: AppProps) {
   return (
     <AppCacheProvider {...props}>
