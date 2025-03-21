@@ -49,11 +49,11 @@ export const cvConfig = {
       name: "Projects completed",
       count: 25,
     },
-    {
-      icon: "icon-cup",
-      name: "Cup of coffee",
-      count: 45,
-    },
+    // {
+    //   icon: "icon-cup",
+    //   name: "Cup of coffee",
+    //   count: 45,
+    // },
     // {
     //     icon: "icon-people",
     //     name: "Satisfied clients",
@@ -86,11 +86,11 @@ export const cvConfig = {
       href: "experience",
       className: "icon-graduation",
     },
-    // {
-    //   label: "Works",
-    //   href: "works",
-    //   className: "icon-layers",
-    // },
+    {
+      label: "Works",
+      href: "works",
+      className: "icon-layers",
+    },
     {
       label: "Blog",
       href: "blog",
@@ -173,7 +173,16 @@ export const cvConfig = {
       href: "https://www.tqdesign.vn/home.html",
     },
     {
-      type: [WorkType.Web],
+      type: [WorkType.Mobile, WorkType.Web],
+      title: "TQ Design",
+      term: "ASP.NET MVC, HTML5/CSS3, Jquery",
+      description: "",
+      moreIcon: MoreType.Link,
+      thumbnail: "/images/works/tqdesign.jpg",
+      href: "https://www.tqdesign.vn/home.html",
+    },
+    {
+      type: [WorkType.Mobile, WorkType.Web],
       title: "AKARI City website",
       term: "ASP.NET MVC, HTML5/CSS3, Jquery",
       description: "",
@@ -182,7 +191,7 @@ export const cvConfig = {
       href: "https://akaricity.vn/",
     },
     {
-      type: [WorkType.Web],
+      type: [WorkType.Mobile, WorkType.Web],
       title: "Dragon village",
       term: "ASP.NET MVC, HTML5/CSS3, Jquery",
       description: "Project about an apartment complex development",
@@ -211,12 +220,21 @@ export const cvConfig = {
     },
     {
       type: [WorkType.Mobile, WorkType.Web],
+      title: "Remote Work Cloud",
+      term: "Vue 3.0,TypeScript, Vuex, Vue Router",
+      description: "HR, department, work management same Jira",
+      moreIcon: MoreType.Options,
+      thumbnail: "/images/works/hr.png",
+      href: "https://remote-work-cloud.com/en/remoteworkcloud/",
+    },
+    {
+      type: [WorkType.Mobile, WorkType.Web],
       title: "Drill (doing)",
       term: "VueJS",
       description: "Web App for study, test for japanese students",
       moreIcon: MoreType.Options,
       thumbnail: "/images/works/drill.png",
-      href: "#",
+      href: "https://digistudy.sing.jp/login",
     },
     {
       type: [WorkType.Web],
@@ -225,7 +243,7 @@ export const cvConfig = {
       description: "Big project manage system real estate, manage company, partner, user and owner",
       moreIcon: MoreType.Options,
       thumbnail: "/images/works/chintai.png",
-      href: "#",
+      href: "http://admin.chintaidx.com/#/auth/login",
     },
     // {
     //   type: [WorkType.Web],
