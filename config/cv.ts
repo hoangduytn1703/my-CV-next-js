@@ -224,7 +224,7 @@ export const cvConfig = {
       term: "Vue 3.0,TypeScript, Vuex, Vue Router",
       description: "HR, department, work management same Jira",
       moreIcon: MoreType.Options,
-      thumbnail: "/images/works/hr.png",
+      thumbnail: "/images/works/HR2.PNG",
       href: "https://remote-work-cloud.com/en/remoteworkcloud/",
     },
     {
