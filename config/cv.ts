@@ -143,13 +143,13 @@ export const cvConfig = {
         description: `Front end developer, develop web app, use VueJS/NuxtJS, ReactJS/NextJS, HTML5/CSS3, Javascript/Typescript, Jquery, Bootstrap, TailwindCSS, SCSS...`,
       },
       {
-        time: "7/2017 - 4/ 2019",
+        time: "7/2017 - 4/2019",
         title: "Full stack Developer",
         company: "TQDesign",
-        description: `develop product sugar cane house manager for TTC Group`,
+        description: `develop websites for real estate, food and traffic company`,
       },
       {
-        time: "7/2017 - 4/2017",
+        time: "4/2017 - 4/2017",
         title: "NET Developer",
         company: "BSD SOLUTION",
         description: `develop product sugar cane house manager for TTC Group`,
