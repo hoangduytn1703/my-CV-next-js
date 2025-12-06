@@ -100,11 +100,11 @@ export const cvConfig = {
       href: "experience",
       className: "icon-graduation",
     },
-    // {
-    //   label: "Works",
-    //   href: "works",
-    //   className: "icon-layers",
-    // },
+    {
+      label: "Works",
+      href: "works",
+      className: "icon-layers",
+    },
     {
       label: "Blog",
       href: "blog",
@@ -241,7 +241,7 @@ export const cvConfig = {
         "An online examination system designed for Japanese students. Built interactive quiz and test-taking interfaces using Vue 3. Implemented features for real-time feedback and scoring.",
       moreIcon: MoreType.Options,
       thumbnail: "/images/works/drill.png",
-      href: "#",
+      href: "https://digistudy.sing.jp/login",
     },
     {
       type: [WorkType.Web],
@@ -263,7 +263,7 @@ export const cvConfig = {
         "A hotel management platform for real estate services. Built responsive front-end pages using Vue.js. Integrated interactive features with real-time data updates.",
       moreIcon: MoreType.Options,
       thumbnail: "/images/works/chintai.png",
-      href: "#",
+      href: "http://admin.chintaidx.com/#/auth/login",
     },
     {
       type: [WorkType.Web],
