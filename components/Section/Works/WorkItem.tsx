@@ -114,30 +114,33 @@ type Props = {
   href: string;
   type: string[];
   description?: string;
+  companyFilter: string;
   setModal: React.Dispatch<React.SetStateAction<WorkModalData>>;
 };
 
-const WorkItem = ({ title, term, moreIcon, thumbnail, href, type, description, setModal }: Props) => {
+const WorkItem = ({ title, term, moreIcon, thumbnail, href, description, companyFilter, setModal }: Props) => {
   const onClick = useCallback(() => {
     switch (moreIcon) {
       case MoreType.Link:
-        window.open(href);
+        if (href && href !== "#") {
+          window.open(href);
+        }
         break;
       case MoreType.Options:
         setModal({
           open: true,
           title,
           description,
-          href,
+          href: href || "#",
           thumbnail,
         });
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setModal]);
+  }, [setModal, href, moreIcon, title, description, thumbnail]);
 
   return (
-    <Root item xs={12} sm={6} md={4} className={`${classes.item} work-item ${type.join(" ")}`}>
+    <Root item xs={12} sm={6} md={4} className={`${classes.item} work-item ${companyFilter}`}>
       <div className={`${classes.portfolioItem} sanim`} onClick={onClick}>
         <div className={classes.details}>
           <span className="term">{term}</span>
@@ -149,19 +152,36 @@ const WorkItem = ({ title, term, moreIcon, thumbnail, href, type, description, s
           </span>
         </div>
         <div className={classes.thumb}>
-          <Image
-            src={thumbnail || ""}
-            alt="work-thumbnail"
-            width={6}
-            height={4}
-            sizes="100vw"
-            style={{
-              width: "100%",
-              height: "215px",
-              objectFit: "cover",
-              display: "flex",
-            }}
-          />
+          {thumbnail ? (
+            <Image
+              src={thumbnail}
+              alt="work-thumbnail"
+              width={400}
+              height={300}
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "215px",
+                objectFit: "cover",
+                display: "flex",
+              }}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "/images/works/default-placeholder.svg";
+              }}
+            />
+          ) : (
+            <img
+              src="/images/works/default-placeholder.svg"
+              alt="work-thumbnail"
+              style={{
+                width: "100%",
+                height: "215px",
+                objectFit: "cover",
+                display: "flex",
+              }}
+            />
+          )}
           <div className="mask" />
         </div>
       </div>
