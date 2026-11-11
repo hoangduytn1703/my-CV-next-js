@@ -1,0 +1,96 @@
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  @media (pointer: coarse) {
+    display: none;
+  }
+}
+
+.ringWrap,
+.dotWrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.ring {
+  position: absolute;
+  left: -20px;
+  top: -20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--text);
+  display: grid;
+  place-items: center;
+  transition: transform 0.4s var(--ease-out), background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease,
+    scale 0.2s ease;
+}
+
+.dot {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-1);
+  box-shadow: 0 0 12px var(--accent-1);
+  transition: transform 0.3s var(--ease-out), opacity 0.2s ease;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--on-accent);
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 0.25s ease, transform 0.4s var(--ease-out);
+}
+
+.ringWrap[data-state="hover"] .ring {
+  transform: scale(1.75);
+  background: rgba(var(--accent-rgb), 0.12);
+  border-color: var(--accent-1);
+}
+
+.ringWrap[data-state="label"] .ring {
+  transform: scale(2.3);
+  background: var(--accent-1);
+  border-color: transparent;
+  box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.6);
+}
+
+.ringWrap[data-state="label"] .label {
+  opacity: 1;
+  transform: scale(0.435);
+}
+
+.ringWrap[data-state="text"] .ring {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.ringWrap[data-pressed="true"] .ring {
+  scale: 0.82;
+}
+
+.dotWrap[data-state="hover"] .dot,
+.dotWrap[data-state="label"] .dot,
+.dotWrap[data-state="text"] .dot {
+  transform: scale(0);
+}

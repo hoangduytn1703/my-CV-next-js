@@ -26,3 +26,6 @@ export const throttle = (callback: any, limit = 250) => {
     }
   };
 };
+
+/** Join class names, skipping falsy values. */
+export const cx = (...classes: (string | false | null | undefined)[]) => classes.filter(Boolean).join(" ");

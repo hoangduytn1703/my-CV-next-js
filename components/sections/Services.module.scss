@@ -1,0 +1,100 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cell {
+  height: 100%;
+}
+
+.card {
+  height: 100%;
+  padding: clamp(26px, 3vw, 36px);
+  border-radius: 28px;
+  overflow: hidden;
+
+  &:hover .icon {
+    transform: translateY(-6px) rotate(-8deg);
+    box-shadow: 0 18px 40px -12px var(--c);
+  }
+  &:hover .bar {
+    transform: scaleX(1);
+  }
+  &:hover .num {
+    opacity: 1;
+    background-image: linear-gradient(180deg, var(--c), transparent 120%);
+  }
+}
+
+/* Filled + faded (text-stroke shows the variable font's overlapping contours) */
+.num {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: transparent;
+  background: linear-gradient(180deg, var(--text-dim), transparent 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  color: #04110b;
+  background: var(--c);
+  box-shadow: 0 12px 30px -14px var(--c);
+
+  svg {
+    width: 28px;
+    height: 28px;
+    stroke-width: 2;
+  }
+  transition: transform 0.5s var(--ease-spring), box-shadow 0.4s ease;
+}
+
+.title {
+  margin: 28px 0 12px;
+  font-family: var(--font-display);
+  font-size: 21px;
+  letter-spacing: -0.02em;
+}
+
+.desc {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--c);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

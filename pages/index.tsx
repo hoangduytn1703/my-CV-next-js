@@ -1,93 +1,87 @@
-import { styled } from "@mui/material";
+import Background from "components/fx/Background";
+import { IntroProvider } from "components/fx/Intro";
+import TechMarquee from "components/fx/Marquee";
+import { BackToTop, ScrollProgress } from "components/fx/ScrollProgress";
+import { SmoothScroll } from "components/fx/SmoothScroll";
+import Footer from "components/layout/Footer";
+import Navbar from "components/layout/Navbar";
+import About from "components/sections/About";
+import Contact from "components/sections/Contact";
+import Experience from "components/sections/Experience";
+import Hero from "components/sections/Hero";
+import Services from "components/sections/Services";
+import Works from "components/sections/Works";
 import { cvConfig } from "config/cv";
 import config from "config/site";
-import { drawerWidth } from "constants/app";
-import { FbProfileRes } from "interfaces/response";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
-import { EnvConfig } from "services/envConfig";
 
-const SlideMenu = dynamic(() => import("components/SlideMenu"));
-const SectionHome = dynamic(() => import("components/Section/Home"));
-const SectionAbout = dynamic(() => import("components/Section/About"));
-const SectionServices = dynamic(() => import("components/Section/Services"));
-const SectionExperience = dynamic(() => import("components/Section/Experience"));
-const SectionWorks = dynamic(() => import("components/Section/Works"));
-// const SectionBlog = dynamic(() => import("components/Section/Blog"));
-const SectionContact = dynamic(() => import("components/Section/Contact"));
-const ReturnToTop = dynamic(() => import("components/ReturnToTop"), { ssr: false });
+// Pointer-only effect, nothing to render on the server.
+const Cursor = dynamic(() => import("components/fx/Cursor"), { ssr: false });
 
-const PREFIX = "CV";
-const classes = {
-  content: `${PREFIX}-content`,
+const pageTitle = `${cvConfig.name} — ${config.siteTitle}`;
+const ogImage = `${config.siteUrl}/images/cv-thumbnail.jpg`;
+
+// Structured data so search engines understand who this page is about.
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: cvConfig.name,
+  jobTitle: cvConfig.mainJob[0],
+  description: cvConfig.description,
+  url: config.siteUrl,
+  image: ogImage,
+  email: "mailto:hoangduytn1703@gmail.com",
+  address: { "@type": "PostalAddress", addressLocality: "Ho Chi Minh City", addressCountry: "VN" },
+  alumniOf: cvConfig.experience.education.map((e) => e.title),
+  worksFor: { "@type": "Organization", name: cvConfig.experience.work[0].company },
+  knowsAbout: cvConfig.skillGroups.flatMap((g) => g.items),
+  sameAs: config.socialLinks.filter((l) => l.url.startsWith("http")).map((l) => l.url),
 };
-const Root = styled("main")(({ theme }) => ({
-  [`&.${classes.content}`]: {
-    flexGrow: 1,
-    [theme.breakpoints.up("md")]: {
-      marginLeft: drawerWidth,
-    },
-  },
-}));
 
-export const FbContext = React.createContext("");
+const CV = () => (
+  <>
+    <Head>
+      <title>{pageTitle}</title>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta name="description" content={config.siteDescription} />
+      <link rel="canonical" href={config.siteUrl} />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={cvConfig.description} />
+      <meta property="og:type" content="profile" />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:url" content={config.siteUrl} />
+      <meta property="fb:app_id" content={config.siteFBAppID} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={cvConfig.description} />
+      <meta name="twitter:image" content={ogImage} />
+      <meta name="image" content={ogImage} />
+      <meta name="author" content={cvConfig.name} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
+    </Head>
 
-const CV = () => {
-  const [profileUrl, setProfileUrl] = useState("");
-
-  useEffect(() => {
-    import("scrollreveal").then((m) => {
-      window.ScrollReveal = m.default;
-      window.ScrollReveal().reveal(".sanim", {
-        delay: 200,
-        distance: "30px",
-        origin: "bottom",
-        duration: 1000,
-        interval: 50,
-      });
-    });
-    import("services/api").then((api) => {
-      api.default
-        .get<FbProfileRes>("/api/fb/profile", {
-          params: { userID: EnvConfig.fbUserID },
-        })
-        .then((res) => {
-          setProfileUrl(res.data?.url || "");
-        });
-    });
-  }, []);
-
-  return (
-    <>
-      <Head>
-        <title>{`${cvConfig.title} - ${config.siteTitle}`}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta property="og:title" content={`${cvConfig.title} - ${config.siteTitle}`} />
-        <meta property="og:description" content={cvConfig.description} />
-        <meta property="og:type" content="article" />
-        <meta property="og:image" content={`${process.env.PUBLIC_URL}/images/cv-thumbnail.jpg`} />
-        <meta property="og:url" content={`${process.env.PUBLIC_URL}`} />
-        <meta property="fb:app_id" content={config.siteFBAppID} />
-        <meta name="image" content={`${process.env.PUBLIC_URL}/images/cv-thumbnail.jpg`} />
-        <meta name="author" content={cvConfig.name} />
-      </Head>
-      <SlideMenu />
-      <Root className={classes.content}>
-        <FbContext.Provider value={profileUrl}>
-          <SectionHome />
-          <SectionAbout />
-        </FbContext.Provider>
-        <SectionServices />
-        <SectionExperience />
-        <SectionWorks />
-        {/*        <SectionBlog /> */}
-        <SectionContact />
-      </Root>
-      <ReturnToTop />
-    </>
-  );
-};
+    <SmoothScroll>
+      <IntroProvider>
+        <Background />
+        <ScrollProgress />
+        <Cursor />
+        <Navbar />
+        <main>
+          <Hero />
+          <TechMarquee />
+          <About />
+          <Services />
+          <Experience />
+          <Works />
+          <Contact />
+        </main>
+        <Footer />
+        <BackToTop />
+      </IntroProvider>
+    </SmoothScroll>
+  </>
+);
 
 export default CV;
