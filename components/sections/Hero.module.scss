@@ -75,8 +75,8 @@
 .word {
   display: inline-block;
   overflow: hidden;
-  padding: 0.06em 0.04em 0.14em;
-  margin: -0.06em -0.04em -0.14em;
+  padding: 0.06em 0.04em 0.3em;
+  margin: -0.06em -0.04em -0.3em;
   vertical-align: top;
   white-space: nowrap;
 }
@@ -97,6 +97,8 @@
 }
 
 .highlight .letterInner {
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
   background: var(--grad);
   background-size: var(--n) 100%;
   background-position: var(--p) 0;
@@ -201,7 +203,9 @@
 }
 
 .chipInner {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 6px 12px;
   border-radius: 999px;
   font-family: var(--font-mono);

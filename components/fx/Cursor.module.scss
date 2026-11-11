@@ -1,40 +1,26 @@
-.cursor {
+/* The frame layer sits directly in the root stacking context so
+   mix-blend-mode: difference blends against the page (white on dark,
+   black on light) — any ancestor with z-index/opacity would isolate it. */
+.target {
   position: fixed;
-  inset: 0;
+  left: 0;
+  top: 0;
   z-index: 9999;
+  width: 0;
+  height: 0;
   pointer-events: none;
+  mix-blend-mode: difference;
+  will-change: transform;
   opacity: 0;
   transition: opacity 0.3s ease;
 
-  &.visible {
+  &[data-visible="true"] {
     opacity: 1;
   }
 
   @media (pointer: coarse) {
     display: none;
   }
-}
-
-.ringWrap,
-.dotWrap {
-  position: fixed;
-  left: 0;
-  top: 0;
-  will-change: transform;
-}
-
-.ring {
-  position: absolute;
-  left: -20px;
-  top: -20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--text);
-  display: grid;
-  place-items: center;
-  transition: transform 0.4s var(--ease-out), background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease,
-    scale 0.2s ease;
 }
 
 .dot {
@@ -44,53 +30,76 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent-1);
-  box-shadow: 0 0 12px var(--accent-1);
-  transition: transform 0.3s var(--ease-out), opacity 0.2s ease;
+  background: #fff;
+  transition: transform 0.25s var(--ease-out), opacity 0.2s ease;
 }
 
+.corner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border: 3px solid #fff;
+  will-change: transform;
+}
+
+.tl {
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 3px;
+}
+.tr {
+  border-left: 0;
+  border-bottom: 0;
+  border-top-right-radius: 3px;
+}
+.br {
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 3px;
+}
+.bl {
+  border-right: 0;
+  border-top: 0;
+  border-bottom-left-radius: 3px;
+}
+
+.target[data-pressed="true"] .dot {
+  transform: scale(0.6);
+}
+
+/* Over text fields: keep the native caret, hide the dot */
+.target[data-state="text"] .dot {
+  opacity: 0;
+}
+
+/* HUD tag shown on the locked frame (data-cursor-label) */
 .label {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  padding: 3px 8px;
+  border-radius: 6px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--on-accent);
-  opacity: 0;
-  transform: scale(0.3);
-  transition: opacity 0.25s ease, transform 0.4s var(--ease-out);
-}
-
-.ringWrap[data-state="hover"] .ring {
-  transform: scale(1.75);
-  background: rgba(var(--accent-rgb), 0.12);
-  border-color: var(--accent-1);
-}
-
-.ringWrap[data-state="label"] .ring {
-  transform: scale(2.3);
   background: var(--accent-1);
-  border-color: transparent;
-  box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.6);
-}
-
-.ringWrap[data-state="label"] .label {
-  opacity: 1;
-  transform: scale(0.435);
-}
-
-.ringWrap[data-state="text"] .ring {
+  box-shadow: 0 6px 18px -6px rgba(var(--accent-rgb), 0.8);
+  pointer-events: none;
   opacity: 0;
-  transform: scale(0.5);
-}
+  transition: opacity 0.2s ease;
 
-.ringWrap[data-pressed="true"] .ring {
-  scale: 0.82;
-}
+  &[data-show="true"] {
+    opacity: 1;
+  }
 
-.dotWrap[data-state="hover"] .dot,
-.dotWrap[data-state="label"] .dot,
-.dotWrap[data-state="text"] .dot {
-  transform: scale(0);
+  @media (pointer: coarse) {
+    display: none;
+  }
 }

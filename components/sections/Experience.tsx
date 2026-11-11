@@ -1,6 +1,7 @@
 import { ArrowUpRight, Briefcase, Globe, Graduation } from "components/fx/icons";
 import { EASE_OUT } from "components/fx/motion";
 import { Reveal } from "components/fx/Reveal";
+import { TechLabel } from "components/fx/TechIcon";
 import { TiltCard } from "components/fx/TiltCard";
 import SectionHeading from "components/sections/SectionHeading";
 import { cvConfig, Job } from "config/cv";
@@ -71,7 +72,9 @@ const TimelineItem = ({ job }: { job: Job }) => {
         {job.tags && (
           <ul className={s.tags}>
             {job.tags.map((t) => (
-              <li key={t}>{t}</li>
+              <li key={t}>
+                <TechLabel name={t} />
+              </li>
             ))}
           </ul>
         )}
@@ -93,50 +96,56 @@ const Experience = () => {
 
         <div className={s.layout}>
           <aside className={s.side}>
-            <Reveal className={cx(s.sideCard, "glass")}>
-              <div className={s.sideHead}>
-                <Graduation /> Education
-              </div>
-              {education.map((edu) => (
-                <div key={edu.title} className={s.edu}>
-                  <span className={s.time}>{edu.time}</span>
-                  <h4>{edu.title}</h4>
-                  <p>{edu.description}</p>
-                  <p className={s.eduPlace}>{edu.location}</p>
+            <Reveal>
+              <TiltCard className={cx(s.sideCard, "glass spotlight")} max={6}>
+                <div className={s.sideHead}>
+                  <Graduation /> Education
                 </div>
-              ))}
-            </Reveal>
-            <Reveal delay={0.1} className={cx(s.sideCard, "glass")}>
-              <div className={s.sideHead}>
-                <Briefcase /> At a glance
-              </div>
-              <ul className={s.glance}>
-                <li>
-                  <strong>{years}+</strong>
-                  <span>Years</span>
-                </li>
-                <li>
-                  <strong>{work.length}</strong>
-                  <span>Companies</span>
-                </li>
-                <li>
-                  <strong>{cvConfig.works.length}</strong>
-                  <span>Projects</span>
-                </li>
-              </ul>
-            </Reveal>
-            <Reveal delay={0.2} className={cx(s.sideCard, "glass")}>
-              <div className={s.sideHead}>
-                <Globe /> Languages
-              </div>
-              <ul className={s.langs}>
-                {cvConfig.languages.map((l) => (
-                  <li key={l.name}>
-                    <strong>{l.name}</strong>
-                    <span>{l.level}</span>
-                  </li>
+                {education.map((edu) => (
+                  <div key={edu.title} className={s.edu}>
+                    <span className={s.time}>{edu.time}</span>
+                    <h4>{edu.title}</h4>
+                    <p>{edu.description}</p>
+                    <p className={s.eduPlace}>{edu.location}</p>
+                  </div>
                 ))}
-              </ul>
+              </TiltCard>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <TiltCard className={cx(s.sideCard, "glass spotlight")} max={6}>
+                <div className={s.sideHead}>
+                  <Briefcase /> At a glance
+                </div>
+                <ul className={s.glance}>
+                  {[
+                    [`${years}+`, "Years"],
+                    [`${work.length}`, "Companies"],
+                    [`${cvConfig.works.length}`, "Projects"],
+                  ].map(([value, label]) => (
+                    <li key={label}>
+                      <TiltCard className={s.glanceItem} max={16} lift={4} data-cursor-target>
+                        <strong>{value}</strong>
+                        <span>{label}</span>
+                      </TiltCard>
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <TiltCard className={cx(s.sideCard, "glass spotlight")} max={6}>
+                <div className={s.sideHead}>
+                  <Globe /> Languages
+                </div>
+                <ul className={s.langs}>
+                  {cvConfig.languages.map((l) => (
+                    <li key={l.name}>
+                      <strong>{l.name}</strong>
+                      <span>{l.level}</span>
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
             </Reveal>
           </aside>
 

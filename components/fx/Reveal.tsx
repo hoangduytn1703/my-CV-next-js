@@ -52,7 +52,7 @@ export const SplitWords = ({ text, as = "h2", className, highlight = "", delay =
             <motion.span
               className={cx("word", highlighted.has(word) && "gradient-text")}
               variants={{
-                hidden: { y: "110%", rotate: 6 },
+                hidden: { y: "140%", rotate: 6 },
                 show: { y: "0%", rotate: 0, transition: { duration: 0.95, ease: EASE_OUT } },
               }}
             >

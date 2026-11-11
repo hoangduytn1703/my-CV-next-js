@@ -432,20 +432,22 @@
   padding: clamp(20px, 2.6vw, 30px) 8px;
   border-bottom: 1px solid var(--border);
   outline: none;
-  transition: padding 0.6s var(--ease-out);
 }
 
 /* Dim the other rows' content (the row itself carries framer's inline opacity) */
 .row > * {
-  transition: opacity 0.45s ease;
+  transition: opacity 0.45s ease, transform 0.6s var(--ease-out);
 }
 .listActive .row:not(.rowActive) > * {
   opacity: 0.32;
 }
 
-.rowActive,
-.row:focus-visible {
-  padding-left: 28px;
+/* Slide with transform (not padding) so the title never re-wraps on hover */
+.rowActive > .rowIndex,
+.rowActive > .rowMain,
+.row:focus-visible > .rowIndex,
+.row:focus-visible > .rowMain {
+  transform: translateX(20px);
 }
 
 .rowIndex {
@@ -461,11 +463,12 @@
 
 .rowMain {
   min-width: 0;
+  padding-right: 20px; /* room for the hover slide */
 }
 
 .rowTitle {
   font-family: var(--font-display);
-  font-size: clamp(22px, 3.2vw, 42px);
+  font-size: clamp(20px, 2.9vw, 39px);
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
@@ -563,9 +566,8 @@
   left: 0;
   top: 0;
   z-index: 30;
-  width: 380px;
+  width: 380px; /* keep in sync with PREVIEW_W / PREVIEW_H in Works.tsx */
   height: 250px;
-  margin: -125px 0 0 -190px;
   border-radius: 20px;
   overflow: hidden;
   pointer-events: none;

@@ -61,7 +61,7 @@ const Preloader = ({ onDone }: { onDone: () => void }) => {
               <span key={i} className={s.mask} aria-hidden>
                 <motion.span
                   className={s.letter}
-                  initial={{ y: "110%" }}
+                  initial={{ y: "140%" }}
                   animate={{ y: "0%" }}
                   transition={{ duration: 0.9, ease: EASE_OUT, delay: 0.1 + i * 0.035 }}
                 >

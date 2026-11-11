@@ -32,6 +32,7 @@
   --noise-opacity: 0.07;
   --overlay: rgba(4, 5, 9, 0.72);
   --glass-solid: rgba(16, 19, 30, 0.88);
+  --lift-shadow: 0 30px 50px -24px rgba(0, 0, 0, 0.65), 0 18px 40px -22px rgba(var(--accent-rgb), 0.55);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -63,6 +64,7 @@
   --noise-opacity: 0.05;
   --overlay: rgba(240, 240, 235, 0.72);
   --glass-solid: rgba(255, 255, 255, 0.9);
+  --lift-shadow: 0 28px 44px -24px rgba(20, 30, 60, 0.32), 0 16px 36px -22px rgba(var(--accent-rgb), 0.5);
 }
 
 /* Animatable angle for rotating conic borders */
@@ -231,7 +233,7 @@ html.lenis body {
 
 .section {
   position: relative;
-  padding: clamp(72px, 9.6vw, 128px) 0;
+  padding: clamp(50px, 6.7vw, 90px) 0;
   overflow-x: clip;
 }
 
@@ -286,17 +288,35 @@ html.lenis body {
   }
 }
 
+/* Technology logos (components/fx/TechIcon.tsx) */
+.tech-icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+}
+li:has(> .tech-icon) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+}
+
 /* Split-text reveal masks (components/fx/Reveal.tsx) */
+/* Bottom padding must clear Syne's deep descenders (g, y, j, p ≈ 0.22em) */
 .word-mask {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
 }
 .word {
   display: inline-block;
   will-change: transform;
+}
+/* background-clip:text only paints inside the box — extend it over the descenders */
+.word.gradient-text {
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
 }
 
 /* ============================================================
@@ -354,6 +374,14 @@ html.lenis body {
   position: relative;
   will-change: transform;
 }
+/* Hovered blocks rise (TiltCard springs `y`) and cast a shadow */
+.tilt-lift {
+  transition: box-shadow 0.5s var(--ease-out);
+}
+.tilt-lift:hover {
+  box-shadow: var(--lift-shadow);
+}
+
 .tilt-glare {
   position: absolute;
   inset: 0;

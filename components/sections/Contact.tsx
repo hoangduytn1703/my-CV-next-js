@@ -1,18 +1,87 @@
 import { burstConfetti } from "components/fx/confetti";
-import { Check, Copy, MapPin, Send } from "components/fx/icons";
+import avatar from "assets/images/avatar2.jpg";
+import { ArrowUpRight, Check, Copy, MapPin, Send } from "components/fx/icons";
 import { Magnetic } from "components/fx/Magnetic";
+import { EASE_OUT } from "components/fx/motion";
 import { Reveal } from "components/fx/Reveal";
-import { trackPointer } from "components/fx/TiltCard";
+import { TiltCard, trackPointer } from "components/fx/TiltCard";
 import SectionHeading from "components/sections/SectionHeading";
+import { cvConfig } from "config/cv";
 import config from "config/site";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { ChangeEvent, CSSProperties, FormEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { cx } from "utils/common";
 import s from "./Contact.module.scss";
 
 const email = config.socialLinks.find((l) => /^mailto:/i.test(l.url))?.url.replace(/^mailto:\s*/i, "") ?? "";
 const phone = config.socialLinks.find((l) => /^tel:/i.test(l.url))?.url.replace(/^tel:\s*/i, "") ?? "";
 const socials = config.socialLinks.filter((l) => l.url.startsWith("http"));
+
+const MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(config.location)}`;
+const BRAND_COLORS: Record<string, string> = { Facebook: "#1877f2", Linkedin: "#0a66c2" };
+
+/** 0798889162 → 0798 889 162 */
+const formatPhone = (p: string) => p.replace(/\s+/g, "").replace(/^(\d{4})(\d{3})(\d+)$/, "$1 $2 $3");
+
+/** Live clock in Vietnam time — handy for clients in other time zones. Rendered client-side only. */
+const LocalTime = () => {
+  const [time, setTime] = useState("--:--");
+
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Ho_Chi_Minh" });
+    const tick = () => setTime(fmt.format(new Date()));
+    tick();
+    const id = setInterval(tick, 15000);
+
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span className={s.clock} data-cursor-label="Local time" title="Local time in Ho Chi Minh City">
+      <span className={s.clockDot} aria-hidden />
+      {time}
+      <small>GMT+7</small>
+    </span>
+  );
+};
+
+const ContactRow = ({
+  icon,
+  label,
+  value,
+  href,
+  delay,
+  children,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  href?: string;
+  delay: number;
+  children?: ReactNode;
+}) => (
+  <motion.li
+    className={s.infoRow}
+    initial={{ opacity: 0, x: -18 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+    transition={{ duration: 0.6, ease: EASE_OUT, delay }}
+  >
+    <span className={s.rowIcon}>{icon}</span>
+    <div className={s.rowText}>
+      <span className={s.rowLabel}>{label}</span>
+      {href ? (
+        <a href={href} className={s.rowValue}>
+          {value}
+        </a>
+      ) : (
+        <span className={s.rowValue}>{value}</span>
+      )}
+    </div>
+    <div className={s.rowActions}>{children}</div>
+  </motion.li>
+);
 
 type Status = "idle" | "sending" | "sent" | "error";
 type FormState = { name: string; email: string; subject: string; message: string };
@@ -122,74 +191,105 @@ const Contact = () => {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <div className={cx(s.item, "glass spotlight")} onPointerMove={trackPointer}>
-                <span className={s.itemIcon}>
-                  <i className="icon-envelope" />
-                </span>
-                <div className={s.itemText}>
-                  <span className={s.itemLabel}>Email</span>
-                  <a href={`mailto:${email}`} className={s.itemValue}>
-                    {email}
-                  </a>
-                </div>
-                <button
-                  className={s.copy}
-                  onClick={copyEmail}
-                  aria-label="Copy email address"
-                  data-cursor-label={copied ? "Copied" : "Copy"}
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.span
-                      key={copied ? "check" : "copy"}
-                      initial={{ scale: 0, rotate: -90 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      exit={{ scale: 0, rotate: 90 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {copied ? <Check /> : <Copy />}
-                    </motion.span>
-                  </AnimatePresence>
-                </button>
-              </div>
-            </Reveal>
+              <TiltCard className={cx(s.card, "glass spotlight")} max={4}>
+                <span className={s.cardBorder} aria-hidden />
+                <span className={s.cardAura} aria-hidden />
 
-            {phone && (
-              <Reveal delay={0.16}>
-                <a href={`tel:${phone}`} className={cx(s.item, "glass spotlight")} onPointerMove={trackPointer}>
-                  <span className={s.itemIcon}>
-                    <i className="icon-phone" />
+                <div className={s.cardHead}>
+                  <span className={s.avatar}>
+                    <Image src={avatar} alt={cvConfig.name} fill sizes="56px" placeholder="blur" />
                   </span>
-                  <div className={s.itemText}>
-                    <span className={s.itemLabel}>Phone</span>
-                    <span className={s.itemValue}>{phone}</span>
+                  <div className={s.who}>
+                    <strong>{cvConfig.name}</strong>
+                    <span>{cvConfig.mainJob[0]}</span>
                   </div>
-                </a>
-              </Reveal>
-            )}
-
-            <Reveal delay={0.2}>
-              <div className={cx(s.item, "glass spotlight")} onPointerMove={trackPointer}>
-                <span className={s.itemIcon}>
-                  <MapPin />
-                </span>
-                <div className={s.itemText}>
-                  <span className={s.itemLabel}>Location</span>
-                  <span className={s.itemValue}>{config.location}</span>
+                  <LocalTime />
                 </div>
-              </div>
-            </Reveal>
 
-            <Reveal delay={0.24}>
-              <div className={s.socials}>
-                {socials.map((l) => (
-                  <Magnetic key={l.label} strength={0.3}>
-                    <a href={l.url} target="_blank" rel="noreferrer" className={s.social}>
-                      <i className={l.iconClassName} />
-                      {l.label}
+                <ul className={s.rows}>
+                  <ContactRow
+                    icon={<i className="icon-envelope" />}
+                    label="Email"
+                    value={email}
+                    href={`mailto:${email}`}
+                    delay={0.1}
+                  >
+                    <button
+                      className={s.action}
+                      onClick={copyEmail}
+                      aria-label="Copy email address"
+                      data-cursor-label={copied ? "Copied" : "Copy"}
+                    >
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                          key={copied ? "check" : "copy"}
+                          className={s.actionIcon}
+                          initial={{ scale: 0, rotate: -90 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          exit={{ scale: 0, rotate: 90 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {copied ? <Check /> : <Copy />}
+                        </motion.span>
+                      </AnimatePresence>
+                    </button>
+                    <a
+                      className={s.action}
+                      href={`mailto:${email}`}
+                      aria-label="Write an email"
+                      data-cursor-label="Write"
+                    >
+                      <Send />
                     </a>
-                  </Magnetic>
-                ))}
-              </div>
+                  </ContactRow>
+
+                  {phone && (
+                    <ContactRow
+                      icon={<i className="icon-phone" />}
+                      label="Phone"
+                      value={formatPhone(phone)}
+                      href={`tel:${phone}`}
+                      delay={0.18}
+                    >
+                      <a className={s.action} href={`tel:${phone}`} aria-label="Call" data-cursor-label="Call">
+                        <i className="icon-call-out" />
+                      </a>
+                    </ContactRow>
+                  )}
+
+                  <ContactRow icon={<MapPin />} label="Location" value={config.location} delay={0.26}>
+                    <a
+                      className={s.action}
+                      href={MAP_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Open in Google Maps"
+                      data-cursor-label="Map"
+                    >
+                      <ArrowUpRight />
+                    </a>
+                  </ContactRow>
+                </ul>
+
+                <div className={s.socials}>
+                  {socials.map((l) => (
+                    <a
+                      key={l.label}
+                      href={l.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={s.social}
+                      style={{ "--brand": BRAND_COLORS[l.label] ?? "var(--accent-1)" } as CSSProperties}
+                    >
+                      <span className={s.socialIcon}>
+                        <i className={l.iconClassName} />
+                      </span>
+                      <span className={s.socialName}>{l.label === "Linkedin" ? "LinkedIn" : l.label}</span>
+                      <ArrowUpRight className={s.socialArrow} />
+                    </a>
+                  ))}
+                </div>
+              </TiltCard>
             </Reveal>
           </div>
 

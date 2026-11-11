@@ -27,7 +27,7 @@ const Footer = () => {
               <motion.span
                 className={s.letter}
                 variants={{
-                  hidden: { y: "105%" },
+                  hidden: { y: "140%" },
                   show: { y: "0%", transition: { duration: 1, ease: EASE_OUT } },
                 }}
               >

@@ -5,6 +5,7 @@ import { useIntroDone } from "components/fx/Intro";
 import { Magnetic } from "components/fx/Magnetic";
 import { EASE_OUT } from "components/fx/motion";
 import { useScrollTo } from "components/fx/SmoothScroll";
+import { TechLabel } from "components/fx/TechIcon";
 import { TiltCard } from "components/fx/TiltCard";
 import Typewriter from "components/fx/Typewriter";
 import { cvConfig } from "config/cv";
@@ -36,7 +37,7 @@ const nameVariants: Variants = {
   show: { transition: { staggerChildren: 0.04 } },
 };
 const letterVariants: Variants = {
-  hidden: { y: "115%", rotate: 10 },
+  hidden: { y: "150%", rotate: 10 },
   show: { y: "0%", rotate: 0, transition: { duration: 1.1, ease: EASE_OUT } },
 };
 
@@ -143,7 +144,7 @@ const Hero = () => {
           animate={intro ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.8, rotate: -6 }}
           transition={{ duration: 1.3, ease: EASE_OUT, delay: 0.35 }}
         >
-          <TiltCard className={s.avatarCard} max={14} glare={false} hoverScale={1}>
+          <TiltCard className={s.avatarCard} max={14} glare={false} hoverScale={1} lift={0}>
             <div className={s.glow} aria-hidden />
             <div className={s.orbit} aria-hidden>
               {ORBIT.map((tech, i) => {
@@ -155,7 +156,9 @@ const Hero = () => {
                     className={s.chip}
                     style={{ left: `${50 + 50 * Math.cos(angle)}%`, top: `${50 + 50 * Math.sin(angle)}%` }}
                   >
-                    <span className={s.chipInner}>{tech}</span>
+                    <span className={s.chipInner}>
+                      <TechLabel name={tech} />
+                    </span>
                   </span>
                 );
               })}

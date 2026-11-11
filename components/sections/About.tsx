@@ -3,7 +3,8 @@ import { Download, Trophy } from "components/fx/icons";
 import { Magnetic } from "components/fx/Magnetic";
 import { EASE_OUT } from "components/fx/motion";
 import { Reveal, ScrollWords } from "components/fx/Reveal";
-import { TiltCard, trackPointer } from "components/fx/TiltCard";
+import { TechLabel } from "components/fx/TechIcon";
+import { TiltCard } from "components/fx/TiltCard";
 import SectionHeading from "components/sections/SectionHeading";
 import { cvConfig } from "config/cv";
 import { motion, Variants } from "framer-motion";
@@ -96,7 +97,7 @@ const About = () => (
 
           {cvConfig.awards.map((award) => (
             <Reveal key={award.title} delay={0.1}>
-              <div className={cx(s.award, "glass")}>
+              <TiltCard className={cx(s.award, "glass")} max={6}>
                 <span className={s.awardIcon}>
                   <Trophy />
                 </span>
@@ -106,7 +107,7 @@ const About = () => (
                   </span>
                   <p className={s.awardTitle}>{award.title}</p>
                 </div>
-              </div>
+              </TiltCard>
             </Reveal>
           ))}
 
@@ -121,39 +122,40 @@ const About = () => (
       </div>
 
       <div className={s.skills}>
-        <Reveal className={cx(s.skillsPanel, "glass spotlight")} onPointerMove={trackPointer}>
-          <div className={s.skillsHead}>
-            <h3 className={s.skillsTitle}>
-              <span>{"//"}</span> Skills &amp; proficiency
-            </h3>
-            <div className={s.scale} aria-hidden>
-              <span>Familiar</span>
-              <span>Proficient</span>
-              <span>Expert</span>
+        <Reveal>
+          <TiltCard className={cx(s.skillsPanel, "glass spotlight")} max={2} lift={4}>
+            <div className={s.skillsHead}>
+              <h3 className={s.skillsTitle}>
+                <span>{"//"}</span> Skills &amp; proficiency
+              </h3>
+              <div className={s.scale} aria-hidden>
+                <span>Familiar</span>
+                <span>Proficient</span>
+                <span>Expert</span>
+              </div>
             </div>
-          </div>
-          <div className={s.skillList}>
-            {cvConfig.skills.map((skill, i) => (
-              <SkillMeter key={skill.name} name={skill.name} value={skill.value} index={i} />
-            ))}
-          </div>
+            <div className={s.skillList}>
+              {cvConfig.skills.map((skill, i) => (
+                <SkillMeter key={skill.name} name={skill.name} value={skill.value} index={i} />
+              ))}
+            </div>
+          </TiltCard>
         </Reveal>
 
         <div className={s.toolbox}>
           {cvConfig.skillGroups.map((group, gi) => (
-            <Reveal
-              key={group.title}
-              delay={(gi % 3) * 0.08}
-              className={cx(s.group, "glass spotlight")}
-              onPointerMove={trackPointer}
-            >
-              <span className={s.groupIndex}>{`0${gi + 1}`}</span>
-              <h4 className={s.groupTitle}>{group.title}</h4>
-              <ul className={s.chips}>
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+            <Reveal key={group.title} delay={(gi % 3) * 0.08} className={s.groupCell}>
+              <TiltCard className={cx(s.group, "glass spotlight")} max={8}>
+                <span className={s.groupIndex}>{`0${gi + 1}`}</span>
+                <h4 className={s.groupTitle}>{group.title}</h4>
+                <ul className={s.chips}>
+                  {group.items.map((item) => (
+                    <li key={item}>
+                      <TechLabel name={item} />
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

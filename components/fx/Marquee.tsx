@@ -1,4 +1,5 @@
 import { cvConfig } from "config/cv";
+import { TechIcon } from "components/fx/TechIcon";
 import {
   motion,
   useAnimationFrame,
@@ -37,7 +38,7 @@ const MarqueeRow = ({
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 4], { clamp: false });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 2.8], { clamp: false });
   const x = useTransform(baseX, (v) => `${wrap(-50, 0, v)}%`);
   const direction = useRef(1);
 
@@ -54,6 +55,7 @@ const MarqueeRow = ({
     <div className={s.group}>
       {items.map((item) => (
         <span key={item} className={s.item}>
+          <TechIcon name={item} mono className={s.icon} />
           {item}
           <span className={s.star} aria-hidden>
             ✦
@@ -75,8 +77,8 @@ const MarqueeRow = ({
 
 const TechMarquee = () => (
   <div className={s.wrap} aria-label={`Tech stack: ${TECHS.join(", ")}`}>
-    <MarqueeRow items={TECHS} baseVelocity={-2} className={s.bandA} />
-    <MarqueeRow items={[...TECHS].reverse()} baseVelocity={2} className={s.bandB} />
+    <MarqueeRow items={TECHS} baseVelocity={-1.4} className={s.bandA} />
+    <MarqueeRow items={[...TECHS].reverse()} baseVelocity={1.4} className={s.bandB} />
   </div>
 );
 

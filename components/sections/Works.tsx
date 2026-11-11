@@ -2,6 +2,7 @@ import { ArrowUpRight, Close, GridView, ListView, Trophy } from "components/fx/i
 import { EASE_OUT } from "components/fx/motion";
 import { Reveal } from "components/fx/Reveal";
 import { useLenis } from "components/fx/SmoothScroll";
+import { TechLabel } from "components/fx/TechIcon";
 import { TiltCard } from "components/fx/TiltCard";
 import SectionHeading from "components/sections/SectionHeading";
 import { CompanyType, cvConfig } from "config/cv";
@@ -39,8 +40,8 @@ type Work = typeof works[number];
 type View = "grid" | "list";
 
 const VIEWS: { id: View; label: string; Icon: typeof GridView }[] = [
-  { id: "grid", label: "Grid", Icon: GridView },
   { id: "list", label: "List", Icon: ListView },
+  { id: "grid", label: "Grid", Icon: GridView },
 ];
 
 const filters = Object.entries(CompanyType).map(([label, slug]) => ({
@@ -140,7 +141,9 @@ const WorkCard = ({
       {featured && work.description && <p className={s.excerpt}>{work.description}</p>}
       <ul className={s.tags}>
         {work.tags.slice(0, featured ? 5 : 3).map((t) => (
-          <li key={t}>{t}</li>
+          <li key={t}>
+            <TechLabel name={t} />
+          </li>
         ))}
         {work.tags.length > (featured ? 5 : 3) && <li>+{work.tags.length - (featured ? 5 : 3)}</li>}
       </ul>
@@ -179,6 +182,20 @@ const WorkGrid = ({ items, onOpen }: { items: Work[]; onOpen: (w: Work) => void 
 /* ------------------------------------------------------------------ */
 
 const FOLLOW_SPRING = { stiffness: 260, damping: 28, mass: 0.5 };
+const PREVIEW_W = 380;
+const PREVIEW_H = 250;
+const PREVIEW_GAP = 14;
+
+/** Preview position: follows the cursor horizontally, but floats above the hovered row
+ *  (below it near the top of the screen) so it never covers the title you are reading. */
+const previewPosition = (cursorX: number, row: HTMLElement) => {
+  const r = row.getBoundingClientRect();
+  const x = Math.min(Math.max(cursorX - PREVIEW_W / 2, 12), window.innerWidth - PREVIEW_W - 12);
+  const above = r.top - PREVIEW_GAP - PREVIEW_H;
+  const y = above > 70 ? above : r.bottom + PREVIEW_GAP;
+
+  return { x, y };
+};
 
 const WorkList = ({ items, onOpen }: { items: Work[]; onOpen: (w: Work) => void }) => {
   const listRef = useRef<HTMLDivElement>(null);
@@ -197,28 +214,40 @@ const WorkList = ({ items, onOpen }: { items: Work[]; onOpen: (w: Work) => void 
 
   // The row under the cursor is "active" — re-checked on scroll too, so wheel-scrolling
   // through the list without moving the mouse still updates the highlight and preview.
-  const pick = useCallback(() => {
-    const p = pointer.current;
-    const row = p ? document.elementFromPoint(p.x, p.y)?.closest<HTMLElement>("[data-row]") : null;
-    setActive(row && listRef.current?.contains(row) ? Number(row.dataset.row) : null);
-  }, []);
+  const pick = useCallback(
+    (jump = false) => {
+      const p = pointer.current;
+      const hit = p ? document.elementFromPoint(p.x, p.y)?.closest<HTMLElement>("[data-row]") : null;
+      const row = hit && listRef.current?.contains(hit) ? hit : null;
+      setActive(row ? Number(row.dataset.row) : null);
+      if (!row || !p) return;
+      const pos = previewPosition(p.x, row);
+      if (jump) {
+        x.jump(pos.x);
+        y.jump(pos.y);
+      } else {
+        x.set(pos.x);
+        y.set(pos.y);
+      }
+    },
+    [x, y]
+  );
 
   useEffect(() => {
-    window.addEventListener("scroll", pick, { passive: true });
+    const onScroll = () => pick();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", pick);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [pick]);
 
   const onEnter = (e: PointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "mouse") return;
-    x.jump(e.clientX);
-    y.jump(e.clientY);
+    pointer.current = { x: e.clientX, y: e.clientY };
+    pick(true);
   };
   const onMove = (e: PointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "mouse") return;
     pointer.current = { x: e.clientX, y: e.clientY };
-    x.set(e.clientX);
-    y.set(e.clientY);
     pick();
   };
   const onLeave = () => {
@@ -263,7 +292,9 @@ const WorkList = ({ items, onOpen }: { items: Work[]; onOpen: (w: Work) => void 
           </div>
           <ul className={s.rowTags}>
             {work.tags.slice(0, 3).map((t) => (
-              <li key={t}>{t}</li>
+              <li key={t}>
+                <TechLabel name={t} />
+              </li>
             ))}
           </ul>
           <span className={s.rowArrow} aria-hidden>
@@ -396,7 +427,9 @@ const WorkModal = ({ work, onClose }: { work: Work | null; onClose: () => void }
               )}
               <motion.ul className={s.modalTags} {...fadeIn(0.3)}>
                 {work.tags.map((t) => (
-                  <li key={t}>{t}</li>
+                  <li key={t}>
+                    <TechLabel name={t} />
+                  </li>
                 ))}
               </motion.ul>
               {hasLink(work) && (
@@ -418,7 +451,7 @@ const WorkModal = ({ work, onClose }: { work: Work | null; onClose: () => void }
 
 const Works = () => {
   const [filter, setFilter] = useState(ALL);
-  const [view, setView] = useState<View>("grid");
+  const [view, setView] = useState<View>("list");
   const [selected, setSelected] = useState<Work | null>(null);
   const visible = useMemo(() => (filter === ALL ? works : works.filter((w) => w.slug === filter)), [filter]);
   const close = useCallback(() => setSelected(null), []);

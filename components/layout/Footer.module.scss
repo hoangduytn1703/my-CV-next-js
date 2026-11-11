@@ -1,6 +1,6 @@
 .footer {
   position: relative;
-  padding: clamp(32px, 4.8vw, 64px) 0 32px;
+  padding: clamp(22px, 3.4vw, 45px) 0 32px;
   border-top: 1px solid var(--border);
   overflow: hidden;
 
@@ -36,8 +36,8 @@
   flex-shrink: 0;
   overflow: hidden;
   /* side padding keeps glyph edges (negative letter-spacing) inside the clip box */
-  padding: 0.04em 0.06em 0.14em;
-  margin: 0 -0.06em;
+  padding: 0.04em 0.06em 0.3em;
+  margin: 0 -0.06em -0.16em;
   transition: transform 0.5s var(--ease-spring);
 
   &:hover {
@@ -48,7 +48,9 @@
 .letter {
   display: inline-block;
   color: transparent;
-  background: linear-gradient(180deg, var(--text-muted) 0%, var(--text-dim) 60%, transparent 120%);
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
+  background: linear-gradient(180deg, var(--text-muted) 0%, var(--text-dim) 75%);
   -webkit-background-clip: text;
   background-clip: text;
   opacity: 0.5;

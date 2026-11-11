@@ -52,18 +52,33 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 
-  li {
+  .glanceItem {
     padding: 14px 10px;
     border-radius: 16px;
     text-align: center;
     background: var(--surface);
     border: 1px solid var(--border);
   }
+  .glanceItem {
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .glanceItem:hover {
+    border-color: rgba(var(--accent-rgb), 0.45);
+    background: rgba(var(--accent-rgb), 0.08);
+  }
   strong {
     display: block;
     font-family: var(--font-display);
     font-size: 28px;
     line-height: 1.1;
+    transition: transform 0.45s var(--ease-spring);
+  }
+  .glanceItem:hover strong {
+    transform: scale(1.12);
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
   span {
     font-size: 12px;

@@ -17,6 +17,8 @@ interface TiltCardProps extends HTMLMotionProps<"div"> {
   max?: number;
   glare?: boolean;
   hoverScale?: number;
+  /** Pixels the card rises while hovered (0 = no lift/shadow). */
+  lift?: number;
 }
 
 /** 3D tilt-towards-cursor card with an optional moving glare. Mouse only — touch keeps the card flat. */
@@ -24,6 +26,7 @@ export const TiltCard = ({
   max = 10,
   glare = true,
   hoverScale = 1.02,
+  lift = 6,
   className,
   style,
   children,
@@ -35,6 +38,7 @@ export const TiltCard = ({
   const rotateX = useSpring(0, SPRING);
   const rotateY = useSpring(0, SPRING);
   const scale = useSpring(1, SPRING);
+  const y = useSpring(0, SPRING);
   const glareX = useMotionValue(50);
   const glareY = useMotionValue(50);
   const glareOpacity = useSpring(0, SPRING);
@@ -52,6 +56,7 @@ export const TiltCard = ({
     rotateY.set((px - 0.5) * max * 2);
     rotateX.set((0.5 - py) * max * 2);
     scale.set(hoverScale);
+    y.set(-lift);
     glareX.set(px * 100);
     glareY.set(py * 100);
     glareOpacity.set(1);
@@ -64,14 +69,15 @@ export const TiltCard = ({
     rotateX.set(0);
     rotateY.set(0);
     scale.set(1);
+    y.set(0);
     glareOpacity.set(0);
   };
 
   return (
     <motion.div
       ref={ref}
-      className={cx("tilt", className)}
-      style={{ ...style, rotateX, rotateY, scale, transformPerspective: 1000, transformStyle: "preserve-3d" }}
+      className={cx("tilt", lift > 0 && "tilt-lift", className)}
+      style={{ ...style, rotateX, rotateY, scale, y, transformPerspective: 1000, transformStyle: "preserve-3d" }}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
       {...rest}
