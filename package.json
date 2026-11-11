@@ -4,6 +4,9 @@
   "description": "Nguyen Hoang Duy",
   "author": "Nguyen Hoang Duy",
   "license": "UNLICENSED",
+  "engines": {
+    "node": "24.x"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/letrungdo/cv.git"
