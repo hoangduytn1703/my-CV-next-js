@@ -165,11 +165,11 @@ const Hero = () => {
             </div>
             <div className={s.blob}>
               <Image
-                src={avatar}
+                src={cvConfig.avatar || avatar}
                 alt={cvConfig.name}
                 fill
                 priority
-                placeholder="blur"
+                placeholder={cvConfig.avatar ? "empty" : "blur"}
                 sizes="(max-width: 960px) 70vw, 400px"
                 className={s.avatar}
               />

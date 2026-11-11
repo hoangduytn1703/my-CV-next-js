@@ -480,3 +480,106 @@ li:has(> .tech-icon) {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   Admin panel (/admin)
+   ============================================================ */
+.admin-shell {
+  min-height: 100vh;
+}
+
+.admin-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px clamp(12px, 3vw, 28px);
+  background: rgba(7, 8, 13, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.admin-logo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: #03130c;
+  background: linear-gradient(110deg, #34d399, #22d3ee 50%, #a78bfa);
+}
+
+.admin-body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 36px);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px clamp(12px, 3vw, 28px) 80px;
+}
+
+.admin-nav {
+  position: sticky;
+  top: 90px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  button {
+    text-align: left;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #a3a9bd;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      color: #eef0f6;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    &.active {
+      color: #03130c;
+      background: linear-gradient(110deg, #34d399, #22d3ee);
+    }
+  }
+}
+
+.admin-main {
+  min-width: 0;
+}
+
+.admin-glass {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px !important;
+}
+
+.admin-chip-icon {
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 860px) {
+  .admin-body {
+    grid-template-columns: 1fr;
+  }
+  .admin-nav {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+
+    button {
+      white-space: nowrap;
+    }
+  }
+}

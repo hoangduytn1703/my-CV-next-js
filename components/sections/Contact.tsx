@@ -197,7 +197,13 @@ const Contact = () => {
 
                 <div className={s.cardHead}>
                   <span className={s.avatar}>
-                    <Image src={avatar} alt={cvConfig.name} fill sizes="56px" placeholder="blur" />
+                    <Image
+                      src={cvConfig.avatar || avatar}
+                      alt={cvConfig.name}
+                      fill
+                      sizes="56px"
+                      placeholder={cvConfig.avatar ? "empty" : "blur"}
+                    />
                   </span>
                   <div className={s.who}>
                     <strong>{cvConfig.name}</strong>
