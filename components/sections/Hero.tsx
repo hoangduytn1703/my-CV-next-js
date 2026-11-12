@@ -3,17 +3,17 @@ import CountUp from "components/fx/CountUp";
 import { ArrowRight, Download } from "components/fx/icons";
 import { useIntroDone } from "components/fx/Intro";
 import { Magnetic } from "components/fx/Magnetic";
-import { EASE_OUT } from "components/fx/motion";
+import { EASE_OUT, prefersReducedMotion } from "components/fx/motion";
 import { useScrollTo } from "components/fx/SmoothScroll";
 import { TechLabel } from "components/fx/TechIcon";
 import { TiltCard } from "components/fx/TiltCard";
 import Typewriter from "components/fx/Typewriter";
 import { cvConfig } from "config/cv";
 import config from "config/site";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform, Variants } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { CSSProperties, Fragment, MouseEvent, useRef } from "react";
+import { CSSProperties, Fragment, MouseEvent, useEffect, useRef, useState } from "react";
 import { cx } from "utils/common";
 import s from "./Hero.module.scss";
 
@@ -49,6 +49,24 @@ const Hero = () => {
   const textY = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const visualY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  // Depth layers: particles lag behind (far), the floating stat cards rush ahead (near).
+  const reduce = useReducedMotion();
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 220]);
+  const nearY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -150]);
+  const midY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -60]);
+
+  // One RGB-split glitch burst on the name right after the intro hands over (hover replays it).
+  const [glitch, setGlitch] = useState(false);
+  useEffect(() => {
+    if (!intro || prefersReducedMotion()) return;
+    const on = setTimeout(() => setGlitch(true), 1500);
+    const off = setTimeout(() => setGlitch(false), 2200);
+
+    return () => {
+      clearTimeout(on);
+      clearTimeout(off);
+    };
+  }, [intro]);
 
   const goTo = (target: string) => (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -57,7 +75,9 @@ const Hero = () => {
 
   return (
     <section id="home" ref={ref} className={s.hero}>
-      <ParticleField className={s.canvas} />
+      <motion.div className={s.canvasLayer} style={{ y: bgY }}>
+        <ParticleField className={s.canvas} />
+      </motion.div>
 
       <motion.div className={cx("container", s.inner)} style={{ opacity: fade }}>
         <motion.div
@@ -72,7 +92,7 @@ const Hero = () => {
             {cvConfig.mainJob[0]} · {years}+ years · {config.location.split(",")[0]}
           </motion.span>
 
-          <motion.h1 className={s.name} variants={nameVariants} aria-label={cvConfig.name}>
+          <motion.h1 className={cx(s.name, glitch && s.glitch)} variants={nameVariants} aria-label={cvConfig.name}>
             {nameWords.map((word, wi) => {
               const highlight = wi === nameWords.length - 1;
 
@@ -175,20 +195,24 @@ const Hero = () => {
               />
             </div>
             <div className={cx(s.floatCard, s.fc1)}>
-              <div className={s.floatInner}>
-                <strong>
-                  <CountUp to={years} delay={1.2} />+
-                </strong>
-                <span>Years experience</span>
-              </div>
+              <motion.div style={{ y: nearY }}>
+                <div className={s.floatInner}>
+                  <strong>
+                    <CountUp to={years} delay={1.2} />+
+                  </strong>
+                  <span>Years experience</span>
+                </div>
+              </motion.div>
             </div>
             <div className={cx(s.floatCard, s.fc2)}>
-              <div className={s.floatInner}>
-                <strong>
-                  <CountUp to={projects} delay={1.4} />
-                </strong>
-                <span>Projects delivered</span>
-              </div>
+              <motion.div style={{ y: midY }}>
+                <div className={s.floatInner}>
+                  <strong>
+                    <CountUp to={projects} delay={1.4} />
+                  </strong>
+                  <span>Projects delivered</span>
+                </div>
+              </motion.div>
             </div>
           </TiltCard>
         </motion.div>

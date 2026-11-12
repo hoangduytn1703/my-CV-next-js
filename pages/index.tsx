@@ -2,6 +2,7 @@ import Background from "components/fx/Background";
 import { IntroProvider } from "components/fx/Intro";
 import TechMarquee from "components/fx/Marquee";
 import { BackToTop, ScrollProgress } from "components/fx/ScrollProgress";
+import SectionHud from "components/fx/SectionHud";
 import { SmoothScroll } from "components/fx/SmoothScroll";
 import Footer from "components/layout/Footer";
 import Navbar from "components/layout/Navbar";
@@ -78,6 +79,7 @@ const CV = () => (
           <Contact />
         </main>
         <Footer />
+        <SectionHud />
         <BackToTop />
       </IntroProvider>
     </SmoothScroll>

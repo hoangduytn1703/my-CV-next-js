@@ -1,6 +1,27 @@
 .heading {
+  position: relative;
+  isolation: isolate;
   max-width: 900px;
   margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+/* Parallax layer: huge outlined section number behind the heading */
+.ghost {
+  position: absolute;
+  right: 0;
+  top: -0.32em;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(120px, 19vw, 280px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border-strong);
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 92%);
+  pointer-events: none;
+  user-select: none;
 }
 
 .eyebrow {

@@ -8,6 +8,12 @@
   pointer-events: none;
 }
 
+.layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
 .blob {
   position: absolute;
   width: 62vmax;

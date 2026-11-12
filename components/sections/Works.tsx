@@ -1,3 +1,4 @@
+import { useParallax } from "components/fx/Cyber";
 import { ArrowUpRight, Close, GridView, ListView, Trophy } from "components/fx/icons";
 import { EASE_OUT } from "components/fx/motion";
 import { Reveal } from "components/fx/Reveal";
@@ -99,57 +100,64 @@ const WorkCard = ({
   index: number;
   featured: boolean;
   onOpen: () => void;
-}) => (
-  <TiltCard
-    className={cx(s.card, featured && s.featured)}
-    max={featured ? 5 : 8}
-    role="button"
-    tabIndex={0}
-    aria-label={`${work.title} — view details`}
-    data-cursor-label="View"
-    onClick={onOpen}
-    onKeyDown={onActivate(onOpen)}
-  >
-    <div className={s.thumb}>
-      <Thumb
-        work={work}
-        className={s.img}
-        sizes={
-          featured ? "(max-width: 1080px) 100vw, 820px" : "(max-width: 640px) 100vw, (max-width: 1080px) 50vw, 400px"
-        }
-      />
-    </div>
-    <div className={s.shade} aria-hidden />
-    <span className={s.borderGlow} aria-hidden />
-    <div className={s.topLeft}>
-      <span className={s.index}>{featured ? `Featured · ${pad(index + 1)}` : pad(index + 1)}</span>
-      {work.badge && (
-        <span className={s.badge}>
-          <Trophy /> {work.badge}
-        </span>
-      )}
-    </div>
-    <span className={s.arrow} aria-hidden>
-      <ArrowUpRight />
-    </span>
-    <div className={s.meta}>
-      <span className={s.company}>
-        {work.client ?? work.company}
-        {work.period && <span className={s.period}> · {work.period}</span>}
+}) => {
+  const thumbRef = useRef<HTMLDivElement>(null);
+  // Screenshot drifts inside its frame while the card scrolls past (parallax window).
+  const thumbY = useParallax(thumbRef, featured ? 36 : 26);
+
+  return (
+    <TiltCard
+      className={cx(s.card, featured && s.featured)}
+      max={featured ? 5 : 8}
+      role="button"
+      tabIndex={0}
+      aria-label={`${work.title} — view details`}
+      data-cursor-label="View"
+      onClick={onOpen}
+      onKeyDown={onActivate(onOpen)}
+    >
+      <motion.div ref={thumbRef} className={s.thumb} style={{ y: thumbY }}>
+        <Thumb
+          work={work}
+          className={s.img}
+          sizes={
+            featured ? "(max-width: 1080px) 100vw, 820px" : "(max-width: 640px) 100vw, (max-width: 1080px) 50vw, 400px"
+          }
+        />
+      </motion.div>
+      <span className={s.scan} aria-hidden />
+      <div className={s.shade} aria-hidden />
+      <span className={s.borderGlow} aria-hidden />
+      <div className={s.topLeft}>
+        <span className={s.index}>{featured ? `Featured · ${pad(index + 1)}` : pad(index + 1)}</span>
+        {work.badge && (
+          <span className={s.badge}>
+            <Trophy /> {work.badge}
+          </span>
+        )}
+      </div>
+      <span className={s.arrow} aria-hidden>
+        <ArrowUpRight />
       </span>
-      <h3 className={s.title}>{work.title}</h3>
-      {featured && work.description && <p className={s.excerpt}>{work.description}</p>}
-      <ul className={s.tags}>
-        {work.tags.slice(0, featured ? 5 : 3).map((t) => (
-          <li key={t}>
-            <TechLabel name={t} />
-          </li>
-        ))}
-        {work.tags.length > (featured ? 5 : 3) && <li>+{work.tags.length - (featured ? 5 : 3)}</li>}
-      </ul>
-    </div>
-  </TiltCard>
-);
+      <div className={s.meta}>
+        <span className={s.company}>
+          {work.client ?? work.company}
+          {work.period && <span className={s.period}> · {work.period}</span>}
+        </span>
+        <h3 className={s.title}>{work.title}</h3>
+        {featured && work.description && <p className={s.excerpt}>{work.description}</p>}
+        <ul className={s.tags}>
+          {work.tags.slice(0, featured ? 5 : 3).map((t) => (
+            <li key={t}>
+              <TechLabel name={t} />
+            </li>
+          ))}
+          {work.tags.length > (featured ? 5 : 3) && <li>+{work.tags.length - (featured ? 5 : 3)}</li>}
+        </ul>
+      </div>
+    </TiltCard>
+  );
+};
 
 const WorkGrid = ({ items, onOpen }: { items: Work[]; onOpen: (w: Work) => void }) => (
   <motion.div layout className={s.grid}>
@@ -323,6 +331,8 @@ const WorkList = ({ items, onOpen }: { items: Work[]; onOpen: (w: Work) => void 
             </div>
           ))}
         </motion.div>
+        {/* Re-keyed per row so the scan band sweeps again on every switch */}
+        <span key={active ?? "none"} className={cx(s.scan, s.scanOn)} />
       </motion.div>
     </div>
   );

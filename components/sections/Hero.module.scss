@@ -8,6 +8,11 @@
   overflow: hidden;
 }
 
+.canvasLayer {
+  position: absolute;
+  inset: 0;
+}
+
 .canvas {
   position: absolute;
   inset: 0;
@@ -79,6 +84,53 @@
   margin: -0.06em -0.04em -0.3em;
   vertical-align: top;
   white-space: nowrap;
+}
+
+/* RGB-split glitch: one burst after the intro, replayed when hovering the highlighted word */
+.name.glitch,
+.highlight:hover {
+  animation: name-glitch 0.62s steps(1);
+}
+
+@keyframes name-glitch {
+  0%,
+  100% {
+    transform: none;
+    clip-path: none;
+    text-shadow: none;
+  }
+  6% {
+    transform: translateX(4px) skewX(-6deg);
+    text-shadow: -4px 0 rgba(255, 46, 136, 0.8), 4px 0 rgba(34, 211, 238, 0.8);
+  }
+  14% {
+    transform: translateX(-3px);
+    clip-path: inset(0 0 52% 0);
+    text-shadow: 3px 0 rgba(255, 46, 136, 0.8), -3px 0 rgba(34, 211, 238, 0.8);
+  }
+  22% {
+    transform: none;
+    clip-path: inset(38% 0 0 0);
+  }
+  30% {
+    clip-path: none;
+    text-shadow: none;
+  }
+  52% {
+    transform: translateX(-2px);
+    text-shadow: -2px 0 rgba(255, 46, 136, 0.7), 2px 0 rgba(34, 211, 238, 0.7);
+  }
+  58% {
+    transform: none;
+    text-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name.glitch,
+  .highlight:hover {
+    animation: none;
+  }
 }
 
 .letter {

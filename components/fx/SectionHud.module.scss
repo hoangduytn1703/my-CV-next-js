@@ -1,0 +1,53 @@
+/* Vertical strip in the left gutter (reads bottom → top), so it never covers content. */
+.hud {
+  position: fixed;
+  left: 16px;
+  bottom: clamp(16px, 3vw, 32px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 10px 14px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: var(--glass-solid);
+  border-right: 2px solid var(--accent-1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  /* Notched corners, same shape as the intro's ACCESS GRANTED tag */
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  pointer-events: none;
+}
+
+.index {
+  color: var(--accent-1);
+}
+
+.line {
+  inline-size: 20px;
+  block-size: 1px;
+  background: var(--border-strong);
+}
+
+.label {
+  min-inline-size: 11ch;
+  color: var(--text);
+}
+
+.percent {
+  padding-inline-start: 12px;
+  border-inline-start: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Only where the gutter beside the 1240px container is wide enough */
+@media (max-width: 1279px) {
+  .hud {
+    display: none;
+  }
+}

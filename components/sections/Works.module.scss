@@ -146,11 +146,87 @@
     transform: translateY(0);
     opacity: 1;
   }
+  &:hover .thumb {
+    animation: thumb-glitch 0.4s steps(1);
+  }
 }
 
+.card:hover .scan,
+.scanOn {
+  opacity: 1;
+}
+
+.card:hover .scan::after,
+.scanOn::after {
+  animation: scan-sweep 0.9s var(--ease-out) forwards;
+}
+
+/* Taller than the card so it can drift (scroll parallax, see useParallax in Works.tsx) */
 .thumb {
   position: absolute;
+  inset: -40px 0;
+}
+
+/* Hover: CRT scanlines + one bright scan band sweeping down the screenshot */
+.scan {
+  position: absolute;
   inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 28%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(34, 211, 238, 0.12) 75%,
+      rgba(34, 211, 238, 0.45) 98%,
+      transparent
+    );
+    mix-blend-mode: screen;
+    transform: translateY(-110%);
+  }
+}
+
+@keyframes scan-sweep {
+  to {
+    transform: translateY(380%);
+  }
+}
+
+@keyframes thumb-glitch {
+  0%,
+  100% {
+    filter: none;
+  }
+  20% {
+    filter: hue-rotate(-50deg) saturate(1.7) contrast(1.15);
+  }
+  40% {
+    filter: none;
+  }
+  60% {
+    filter: hue-rotate(70deg) brightness(1.25);
+  }
+  80% {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover .thumb,
+  .card:hover .scan::after,
+  .scanOn::after {
+    animation: none;
+  }
 }
 
 /* Image drifts against the tilt (--px/--py come from TiltCard) for a depth effect */
